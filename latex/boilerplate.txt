@@ -1,0 +1,26 @@
+\documentclass{article}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{hyperref}
+\hypersetup{
+    hidelinks
+}
+
+\begin{document}
+
+\pagestyle{fancy} % Enable fancy page style
+
+\fancyhead[R]{200482797}
+\fancyhead[L]{Owen Monus}
+\thispagestyle{empty}
+\renewcommand{\headrulewidth}{0pt} % Remove the header line
+
+\title{{CLASS_NAME} Assignment {ASSIGNMENT_NUMBER}}
+\author{Owen Monus}
+\date{{DATE}}
+
+\maketitle
+
+
+\end{document}
