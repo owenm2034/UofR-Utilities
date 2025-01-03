@@ -1,3 +1,6 @@
+# paste me in the repo you want to generate an assignment for
+
+
 import os
 import subprocess
 from datetime import datetime
