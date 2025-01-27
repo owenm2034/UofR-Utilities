@@ -1,0 +1,101 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "Build and Run Current C++ File",
+        "type": "shell",
+        "command": "g++",
+        "args": [
+          "${file}",
+          "-o",
+          "${fileDirname}/${fileBasenameNoExtension};"
+        ],
+        "group": {
+          "kind": "build",
+          "isDefault": false
+        },
+        "problemMatcher": ["$gcc"],
+        "detail": "Compiles and runs the current C++ file"
+      },
+      {
+        "label": "Run Current C++ File with Optional Input",
+        "type": "shell",
+        "command": "export INPUT_FILENAME=\"${input:filename:-/dev/null}\" && [[ -n $INPUT_FILENAME && -s $INPUT_FILENAME ]] && ${fileDirname}/${fileBasenameNoExtension} < $INPUT_FILENAME || ${fileDirname}/${fileBasenameNoExtension}",
+
+        "group": {
+          "kind": "test",
+          "isDefault": false
+        },
+        "problemMatcher": ["$gcc"],
+        "detail": "Compiles and runs the current C++ file",
+        "dependsOn":["Build and Run Current C++ File"]
+      },
+      {
+        "label": "Build, Run, and Clean Current C++ File",
+        "type": "process",
+        "command": "rm",
+        "args": [
+          "${fileDirname}/${fileBasenameNoExtension}"
+        ],
+        "group": {
+          "kind": "build",
+          "isDefault": true
+        },
+        "dependsOn": [
+          "Run Current C++ File with Optional Input"
+        ],
+        "presentation": {
+          "reveal": "never",
+          "panel": "shared"
+        },
+        "options": {
+          "cwd": "${fileDirname}"
+        },
+      },
+      {
+        "label": "Generate LaTeX Assignment",
+        "type": "process",
+        "command": "python3",
+        "args": [
+          "latex/makeBoiler.py",
+          "${input:assignmentNumber}",
+          "${input:targetRepo}"
+        ],
+        "problemMatcher": [],
+        "group": {
+          "kind": "build",
+          "isDefault": true
+        },
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared",
+          "clear": false
+        }
+      }
+    ],
+    "inputs": [
+    {
+      "id": "filename",
+      "type": "promptString",
+      "description": "Enter the input file name (leave empty for standard input)",
+      "default": ""
+    },
+    {
+        "id": "assignmentNumber",
+        "type": "promptString",
+        "description": "Enter the assignment number"
+    },
+    {
+        "id": "targetRepo",
+        "type": "pickString",
+        "description": "Select the target repository",
+        "options": [
+          "/Users/owenm/src/ASTR-101",
+          "/Users/owenm/src/CS-350",
+          "/Users/owenm/src/CS-280"
+        ]
+      }
+  ]
+  }

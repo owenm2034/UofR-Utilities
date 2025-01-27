@@ -4,20 +4,24 @@
 import os
 import subprocess
 from datetime import datetime
+import sys
 
 # Get today's date
 today_date = datetime.now().strftime("%B %-d, %Y")
 
 # Function to get class name from .git repo name
-def get_class_name():
+def get_class_name(target_dir):
     try:
         # Run git command to get the repo name
-        repo_name = subprocess.check_output(["git", "rev-parse", "--show-toplevel"], stderr=subprocess.DEVNULL)
+        repo_name = subprocess.check_output(
+            ["git", "rev-parse", "--show-toplevel"], 
+            stderr=subprocess.DEVNULL,
+            cwd=target_dir)
         repo_name = repo_name.decode('utf-8').strip()
         class_name = os.path.basename(repo_name).replace("-", " ")
         return class_name
     except Exception:
-        return "Unknown Class"
+        raise ValueError(f'No git repo found at {target_dir}.')
 
 # Function to load LaTeX boilerplate from a file
 def load_boilerplate(file_name):
@@ -25,21 +29,22 @@ def load_boilerplate(file_name):
         with open(file_name, "r") as f:
             return f.read()
     except FileNotFoundError:
-        return """\\documentclass{article}
-\\usepackage{fancyhdr}
-\\usepackage{graphicx}
-\\usepackage{float}
-\\usepackage{hyperref}
-\\hypersetup{hidelinks}
+        raise ValueError('No template file found.')
 
-\\begin{document}
-\\end{document}"""
+if len(sys.argv) < 3:
+    print("Error: Assignment number is required.")
+    sys.exit(1)
+
+assignment_number = sys.argv[1]
+target_dir = sys.argv[2]
+
+if not os.path.isdir(target_dir):
+    print(f"Error: The specified target directory '{target_dir}' does not exist.")
+    sys.exit(1)
+
 
 # Get class name from repo
-class_name = get_class_name()
-
-# Ask user for assignment number
-assignment_number = input("Enter the assignment number: ")
+class_name = get_class_name(target_dir)
 
 # Load LaTeX boilerplate
 boilerplate = load_boilerplate("latex/boilerplate.txt")
@@ -50,7 +55,7 @@ latex_document = latex_document.replace("{ASSIGNMENT_NUMBER}", assignment_number
 latex_document = latex_document.replace("{DATE}", today_date)
 
 # Save to a .tex file
-output_file = f"a{assignment_number}.tex"
+output_file = f"{target_dir}/assignments/a{assignment_number}/a{assignment_number}.tex"
 if os.path.exists(output_file):
     overwrite = input(f"The file '{output_file}' already exists. Do you want to overwrite it? (y/n): ")
     if overwrite.lower() != 'y':

@@ -4,3 +4,6 @@
 *.aux
 *.minted
 *.out
+*.rkt~
+/bin
+/obj
