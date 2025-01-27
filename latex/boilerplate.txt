@@ -2,6 +2,7 @@
 \usepackage{fancyhdr}
 \usepackage{graphicx}
 \usepackage{float}
+\usepackage{amsmath}
 \usepackage{hyperref}
 \hypersetup{
     hidelinks
