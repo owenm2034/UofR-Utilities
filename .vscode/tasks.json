@@ -52,6 +52,7 @@
         "options": {
           "cwd": "${fileDirname}"
         },
+        "detail": "Run the current c++ file. Cleanup the produced executable."
       },
       
       // Latex
@@ -75,7 +76,8 @@
           "focus": false,
           "panel": "shared",
           "clear": false
-        }
+        },
+        "detail": "Generate a Latex boilerplate for an assignment number and a repo name."
       },
 
       // PlantUML
@@ -101,7 +103,8 @@
           "focus": false,
           "panel": "shared",
           "clear": false
-        }
+        },
+        "detail": "Starts PlantUML as a container. Make sure docker is running."
       }
     ],
     "inputs": [
