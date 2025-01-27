@@ -1,6 +1,7 @@
 {
     "version": "2.0.0",
     "tasks": [
+      // C++
       {
         "label": "Build and Run Current C++ File",
         "type": "shell",
@@ -52,6 +53,8 @@
           "cwd": "${fileDirname}"
         },
       },
+      
+      // Latex
       {
         "label": "Generate LaTeX Assignment",
         "type": "process",
