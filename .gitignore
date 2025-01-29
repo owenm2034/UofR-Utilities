@@ -7,3 +7,4 @@
 *.rkt~
 /bin
 /obj
+/test
