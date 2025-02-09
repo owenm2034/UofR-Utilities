@@ -5,8 +5,13 @@
 \usepackage{amsmath}
 \usepackage{hyperref}
 \hypersetup{
-    hidelinks
+    breaklinks=true,
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue
+    % ,hidelinks
 }
+\def\UrlBreaks{\do\/\do-}
 
 \begin{document}
 
