@@ -55,6 +55,9 @@ latex_document = latex_document.replace("{ASSIGNMENT_NUMBER}", assignment_number
 latex_document = latex_document.replace("{DATE}", today_date)
 
 # Save to a .tex file
+output_dir = f"{target_dir}/assignments/a{assignment_number}"
+os.makedirs(output_dir, exist_ok=True)  # Ensure the directory exists
+
 output_file = f"{target_dir}/assignments/a{assignment_number}/a{assignment_number}.tex"
 if os.path.exists(output_file):
     overwrite = input(f"The file '{output_file}' already exists. Do you want to overwrite it? (y/n): ")
