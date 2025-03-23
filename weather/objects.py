@@ -1,9 +1,10 @@
 # Example data
 from datetime import datetime
+import statistics
 
 class Wind:
     def __init__(self, dirofmaxgust, speedofmaxgust):
-        self.direction: int = dirofmaxgust # 10s of degrees
+        self.direction: int = dirofmaxgust# 10s of degrees
         self.speed: int = speedofmaxgust #
 
 class Temp:
@@ -388,10 +389,13 @@ data = {
 }
 
 def filter_weather_data(data, start_date, end_date):
-    start_md = datetime.strptime(start_date, "%Y-%m-%d").strftime("%m-%d")
-    end_md = datetime.strptime(end_date, "%Y-%m-%d").strftime("%m-%d")
+    # start_md = datetime.strptime(start_date, "%m-%d").strftime("%m-%d")
+    # end_md = datetime.strptime(end_date, "%m-%d").strftime("%m-%d")
+    start_md = start_date
+    end_md = end_date
     
     return list(filter(lambda x: start_md <= x.date.strftime("%m-%d") <= end_md, data))
+
 
 # Extract relevant data
 weatherDays = []
@@ -414,5 +418,26 @@ for date, values in data.items():
         )
     )
 
+def print_statistics(filteredWeatherDays):
+    for attr, label, is_degree in [
+        ("wind.direction", "Wind Direction", True),
+        ("wind.speed", "Wind Speed", False),
+        ("temp.min", "Min Temp", False),
+        ("temp.max", "Max Temp", False),
+        ("temp.mean", "Mean Temp", False)
+    ]:
+        values = [eval(f'w.{attr} * 10' if is_degree else f'w.{attr}') for w in filteredWeatherDays if eval(f'w.{attr}') is not None]
+        if values:
+            print(f'---{label}---')
+            print(f'Average {label}: {statistics.mean(values)}')
+            print(f'St_dev {label}: {statistics.stdev(values)}')
+            print(f'Median {label}: {statistics.median(values)}')
+        else:
+            print(f'No valid data for {label}')
 
-x = filter_weather_data(weatherDays, "2023-05-13", "1999-09-01")
+
+filteredWeatherDays = filter_weather_data(weatherDays, "01-01", "04-01")
+print_statistics(filteredWeatherDays)
+
+
+
