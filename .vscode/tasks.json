@@ -124,9 +124,9 @@
         "type": "pickString",
         "description": "Select the target repository",
         "options": [
-          "/Users/owenm/src/ASTR-101",
-          "/Users/owenm/src/CS-350",
-          "/Users/owenm/src/CS-280"
+          // "/Users/owenm/src/ASTR-101",
+          "/Users/owenm/src/CS-310",
+          // "/Users/owenm/src/CS-280"
         ]
       }
   ]
